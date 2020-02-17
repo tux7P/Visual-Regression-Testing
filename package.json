@@ -11,7 +11,9 @@
     "@wdio/spec-reporter": "^5.18.7",
     "@wdio/sync": "^5.18.7",
     "chromedriver": "^80.0.1",
-    "wdio-chromedriver-service": "^5.0.2"
+    "wdio-chromedriver-service": "^5.0.2",
+    "wdio-image-comparison-service": "^1.9.0",
+    "wdio-visual-regression-service": "^0.9.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/wdio wdio.conf.js"

@@ -1,3 +1,10 @@
+const { path } = require('path');
+var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
+
+function getScreenshotName(basePath) {
+   
+}
+
 exports.config = {
     //
     // ====================
@@ -87,6 +94,8 @@ exports.config = {
     // bail (default is 0 - don't bail, run all tests).
     bail: 0,
     //
+     // Saves a screenshot to a given path if a command fails.
+    screenshotPath: './errorShots/',
     // Set a base URL in order to shorten url command calls. If your `url` parameter starts
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
@@ -107,7 +116,18 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver'],
+    services: ['chromedriver', 'visual-regression'],
+
+    visualRegression: {
+        compare: new VisualRegressionCompare.LocalCompare({
+          referenceName: getScreenshotName(path.join(process.cwd(), 'screenshots/reference')),
+          screenshotName: getScreenshotName(path.join(process.cwd(), 'screenshots/screen')),
+          diffName: getScreenshotName(path.join(process.cwd(), 'screenshots/diff')),
+          misMatchTolerance: 0.01,
+        }),
+        viewportChangePause: 400,
+        viewports: [{ width: 1440, height: 900 }],
+    },
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
